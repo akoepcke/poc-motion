@@ -12,6 +12,8 @@ function App() {
   const constraintsRef_1 = useRef(null);
   const constraintsRef_2 = useRef(null);
 
+  const x = useMotionValue(0);
+
   const [alignment, setAlignment] = useState(Alignment.TOP_LEFT);
 
   const handleDragUpdate = (_: any, { point }: any) => {
@@ -98,6 +100,34 @@ function App() {
         >
           <svg width={60} height={60} className="fill-cyan-600">
             <circle cx="30" cy="30" r="30" />
+          </svg>
+        </motion.div>
+
+        <motion.div
+          className="touch-auto pointer-events-auto inline-block absolute bottom-10 right-10"
+          drag="x"
+          whileTap={{ scale: 1.3 }}
+          whileDrag={{ opacity: 0.5 }}
+          dragMomentum={false}
+          dragConstraints={constraintsRef_1}
+          style={{ x }}
+        >
+          <svg width={60} height={60} className="fill-cyan-600">
+            <rect width={60} height={60} />
+          </svg>
+        </motion.div>
+
+        <motion.div
+          className="touch-auto pointer-events-auto inline-block absolute bottom-10 right-28"
+          drag="y"
+          whileTap={{ scale: 1.3 }}
+          whileDrag={{ opacity: 0.5 }}
+          dragMomentum={false}
+          dragConstraints={constraintsRef_1}
+          style={{ y: x }}
+        >
+          <svg width={60} height={60} className="fill-cyan-600">
+            <rect width={60} height={60} />
           </svg>
         </motion.div>
       </div>
