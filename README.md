@@ -1,5 +1,6 @@
 # actions
 
+- don't constrain draggable element
 - constrain draggable element to div
 - drag with or without momentum after release
 - scale element while tapping
