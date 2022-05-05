@@ -35,7 +35,7 @@ function App() {
           dragConstraints={constraintsRef_2}
         >
           <svg width={60} height={60} className="fill-violet-700">
-            <rect width={60} height={60} />
+            <circle cx="30" cy="30" r="30" />
           </svg>
         </motion.div>
       </div>
