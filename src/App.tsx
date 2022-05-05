@@ -51,23 +51,9 @@ function App() {
     <div className="bg-gradient-to-br from-cyan-300 to-blue-500 w-screen h-[100svh] fixed overflow-hidden overscroll-none p-10 ">
       <div className="relative w-full h-full border-4 border-cyan-800 touch-none pointer-events-none" ref={constraintsRef_1}>
         <motion.div
-          className="touch-auto pointer-events-auto inline-block absolute top-10 left-10"
-          drag
-          whileTap={{ scale: 1.3 }}
-          whileDrag={{ opacity: 0.5 }}
-          dragMomentum={false}
-          dragConstraints={constraintsRef_1}
-        >
-          <svg width={60} height={60} className="fill-cyan-800">
-            <rect width={60} height={60} />
-          </svg>
-        </motion.div>
-
-        <motion.div
           className="touch-auto pointer-events-auto inline-block absolute top-28 left-28"
           drag="x"
           whileTap={{ scale: 1.3 }}
-          whileDrag={{ opacity: 0.5 }}
           dragMomentum={false}
           dragConstraints={constraintsRef_1}
         >
@@ -80,9 +66,36 @@ function App() {
           className="touch-auto pointer-events-auto inline-block absolute top-10 right-10"
           drag="y"
           whileTap={{ scale: 1.3 }}
+          dragMomentum={false}
+          dragConstraints={constraintsRef_1}
+        >
+          <svg width={60} height={60} className="fill-cyan-600">
+            <rect width={60} height={60} />
+          </svg>
+        </motion.div>
+
+        <motion.div
+          className="touch-auto pointer-events-auto inline-block absolute bottom-10 right-28"
+          drag="x"
+          whileTap={{ scale: 1.3 }}
           whileDrag={{ opacity: 0.5 }}
           dragMomentum={false}
           dragConstraints={constraintsRef_1}
+          style={{ x }}
+        >
+          <svg width={60} height={60} className="fill-cyan-600">
+            <rect width={60} height={60} />
+          </svg>
+        </motion.div>
+
+        <motion.div
+          className="touch-auto pointer-events-auto inline-block absolute bottom-10 right-10"
+          drag="y"
+          whileTap={{ scale: 1.3 }}
+          whileDrag={{ opacity: 0.5 }}
+          dragMomentum={false}
+          dragConstraints={constraintsRef_1}
+          style={{ y: x }}
         >
           <svg width={60} height={60} className="fill-cyan-600">
             <rect width={60} height={60} />
@@ -104,29 +117,14 @@ function App() {
         </motion.div>
 
         <motion.div
-          className="touch-auto pointer-events-auto inline-block absolute bottom-10 right-10"
-          drag="x"
+          className="touch-auto pointer-events-auto inline-block absolute top-10 left-10"
+          drag
           whileTap={{ scale: 1.3 }}
           whileDrag={{ opacity: 0.5 }}
           dragMomentum={false}
           dragConstraints={constraintsRef_1}
-          style={{ x }}
         >
-          <svg width={60} height={60} className="fill-cyan-600">
-            <rect width={60} height={60} />
-          </svg>
-        </motion.div>
-
-        <motion.div
-          className="touch-auto pointer-events-auto inline-block absolute bottom-10 right-28"
-          drag="y"
-          whileTap={{ scale: 1.3 }}
-          whileDrag={{ opacity: 0.5 }}
-          dragMomentum={false}
-          dragConstraints={constraintsRef_1}
-          style={{ y: x }}
-        >
-          <svg width={60} height={60} className="fill-cyan-600">
+          <svg width={60} height={60} className="fill-cyan-800">
             <rect width={60} height={60} />
           </svg>
         </motion.div>

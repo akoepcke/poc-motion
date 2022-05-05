@@ -6,6 +6,7 @@
 - change opacity while dragging
 - drag only in x- or y- direction
 - snap to target on dragEnd
+- connected motionValue
 
 # bonus
 
