@@ -1,5 +1,6 @@
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { motion, useMotionValue } from "framer-motion";
+import clsx from "clsx";
 
 const Alignment = {
   TOP_LEFT: 0,
@@ -8,15 +9,24 @@ const Alignment = {
   BOTTOM_LEFT: 3,
 };
 
+const Color = {
+  MISS: 0,
+  HIT: 1,
+};
+
 function App() {
   const constraintsRef_1 = useRef(null);
   const constraintsRef_2 = useRef(null);
 
+  const dropTarget = useRef<HTMLDivElement>(null);
+
   const x = useMotionValue(0);
+  const y = useMotionValue(0);
 
   const [alignment, setAlignment] = useState(Alignment.TOP_LEFT);
+  const [color, setColor] = useState(Color.MISS);
 
-  const handleDragUpdate = (_: any, { point }: any) => {
+  const handleDragSnapUpdate = (_: any, { point }: any) => {
     const { innerHeight, innerWidth } = window;
     const halfHeight = innerHeight / 2;
     const halfWidth = innerWidth / 2;
@@ -47,9 +57,32 @@ function App() {
     constraints = { left: 20, bottom: 20 };
   }
 
+  const handleDragTargetColor = (_: any, { point }: any) => {
+    const target = dropTarget.current;
+    if (!target) return;
+
+    const { top, bottom, left, right } = target.getBoundingClientRect();
+
+    if (left <= point.x && point.x <= right && top <= point.y && point.y <= bottom) {
+      setColor(Color.HIT);
+    } else {
+      setColor(Color.MISS);
+    }
+  };
+
+  let targetColor;
+
+  if (color === Color.MISS) {
+    targetColor = "fill-transparent";
+  }
+  if (color === Color.HIT) {
+    targetColor = "fill-lime-200/30";
+  }
+
   return (
     <div className="bg-gradient-to-br from-cyan-300 to-blue-500 w-screen h-[100svh] fixed overflow-hidden overscroll-none p-10 ">
       <div className="relative w-full h-full border-4 border-cyan-800 touch-none pointer-events-none" ref={constraintsRef_1}>
+        {/* drag in x direction */}
         <motion.div
           className="touch-auto pointer-events-auto inline-block absolute top-28 left-28"
           drag="x"
@@ -62,6 +95,7 @@ function App() {
           </svg>
         </motion.div>
 
+        {/* drag in y direction */}
         <motion.div
           className="touch-auto pointer-events-auto inline-block absolute top-10 right-10"
           drag="y"
@@ -74,6 +108,7 @@ function App() {
           </svg>
         </motion.div>
 
+        {/* drag on combination */}
         <motion.div
           className="touch-auto pointer-events-auto inline-block absolute bottom-10 right-28"
           drag="x"
@@ -87,7 +122,6 @@ function App() {
             <rect width={60} height={60} />
           </svg>
         </motion.div>
-
         <motion.div
           className="touch-auto pointer-events-auto inline-block absolute bottom-10 right-10"
           drag="y"
@@ -102,13 +136,14 @@ function App() {
           </svg>
         </motion.div>
 
+        {/* snap to target */}
         <motion.div
           className="touch-auto pointer-events-auto inline-block fixed"
           style={{ ...constraints }}
           drag
           dragConstraints={{ top: 0, right: 0, bottom: 0, left: 0 }}
           dragElastic={1}
-          onDragEnd={handleDragUpdate}
+          onDragEnd={handleDragSnapUpdate}
           layout
         >
           <svg width={60} height={60} className="fill-cyan-600">
@@ -116,6 +151,7 @@ function App() {
           </svg>
         </motion.div>
 
+        {/* drag anywhere */}
         <motion.div
           className="touch-auto pointer-events-auto inline-block absolute top-10 left-10"
           drag
@@ -128,8 +164,29 @@ function App() {
             <rect width={60} height={60} />
           </svg>
         </motion.div>
+
+        {/* drop to traget */}
+        <motion.div
+          className="touch-auto pointer-events-auto inline-block absolute bottom-24 left-10"
+          drag
+          whileTap={{ scale: 1.3 }}
+          whileDrag={{ opacity: 0.5 }}
+          dragConstraints={{ top: 0, right: 0, bottom: 0, left: 0 }}
+          dragElastic={1}
+          onDrag={handleDragTargetColor}
+        >
+          <svg width={50} height={50} className={clsx("fill-lime-400")}>
+            <circle cx="25" cy="25" r="24" />
+          </svg>
+        </motion.div>
+        <div id="droptarget" ref={dropTarget} className="absolute right-20 top-64 touch-none pointer-events-none">
+          <svg width={100} height={100} className={clsx("stroke-lime-400 stroke-2", targetColor)}>
+            <circle cx="50" cy="50" r="49" />
+          </svg>
+        </div>
       </div>
 
+      {/* constrain to div */}
       <div
         className="w-[75vw] border-4 border-violet-700 h-[30svh] absolute bottom-5 left-2 touch-none pointer-events-none"
         ref={constraintsRef_2}
