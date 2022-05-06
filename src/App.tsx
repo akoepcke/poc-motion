@@ -14,7 +14,7 @@ function App() {
 
   return (
     <>
-      <div className="bg-gradient-to-br from-cyan-300 to-blue-500 w-screen h-[100svh] fixed overflow-hidden overscroll-none p-10 ">
+      <div className="bg-gradient-to-br from-blue-400 to-blue-300 w-screen h-full h-[100svh!important] fixed overflow-hidden overscroll-none p-10 ">
         <div className="relative w-full h-full p-10 border-4 border-cyan-800" ref={constraintsRef_1}>
           <DragElement />
           <DragElement />
